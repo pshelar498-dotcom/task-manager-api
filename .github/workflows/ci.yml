@@ -88,7 +88,9 @@ jobs:
         working-directory: config/staging
         run: |
           TAG="sha-${GITHUB_SHA::7}"
-          sed -i "s|newTag: .*|newTag: ${TAG}|" kustomization.yaml
+          IMAGE="ghcr.io/pshelar498-dotcom/task-manager-api"
+          # change ONLY the newTag line right after this image's name (the UI has its own tag)
+          sed -i "\|name: ${IMAGE}\$|{n;s|newTag: .*|newTag: ${TAG}|}" kustomization.yaml
           echo "New image tag: ${TAG}"
           cat kustomization.yaml
 
